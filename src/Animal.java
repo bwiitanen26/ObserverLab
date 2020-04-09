@@ -6,6 +6,6 @@ public class Animal {
 	}
 	
 	public String toString() {
-		return name + "was added to the zoo.";
+		return name;
 	}
 }

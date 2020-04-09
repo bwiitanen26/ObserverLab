@@ -1,22 +1,34 @@
 import java.util.ArrayList;
-import java.util.Observer;
 
 public class Zoo implements ZooSubject{
-	private ArrayList<Observer> observers;
-	private Animal latestAnimal;
+	private  ArrayList<AnimalAddedListener >listeners;
+	private Animal animal;
+	public Zoo()
+	{
+		listeners = new ArrayList<AnimalAddedListener >();
+	}
+	public void registerAnimalAddedListener(AnimalAddedListener a) {
+		listeners.add(a);
+	}
+
+	public void unregisterAnimalAddedListener(AnimalAddedListener a) {
+		listeners.remove(a);
+	}
+		
+
+	public void notifyListeners() {
+		for(int i = 0; i<listeners.size();i++)
+		{
+			AnimalAddedListener lis = listeners.get(i);
+			lis.update(animal);
+		}
+		
+	}
 	
-	public void registerAnimalAddedListener(PrintNameAnimalAddedListener printNameAnimalAddedListener) {
-		observers.add((Observer) printNameAnimalAddedListener);
+	public void addAnimal(Animal animal)
+	{
+		this.animal = animal;
+		notifyListeners();
 	}
-
-	public void addAnimal(Animal animal) {
-		this.latestAnimal = latestAnimal;
-		notifyObservers();
-		
-	}
-
-	public void unregisterAnimalAddedListener(PrintNameAnimalAddedListener al1) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 }
